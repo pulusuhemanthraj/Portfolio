@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hemanth Raj Pulusu | Data Scientist</title>
+  <meta name="description" content="Hemanth Raj Pulusu — Data Scientist specializing in product analytics, machine learning, data engineering, experimentation, and GenAI/RAG evaluation." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070A12;
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 28px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Manrope", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{width:min(1120px, 92vw); margin:0 auto}
+    .muted{color: var(--muted)}
+
+    /* Background */
+    .bg{position:fixed; inset:0; z-index:-2; overflow:hidden}
+    .orb{position:absolute; width:70vmax; height:70vmax; border-radius:50%; filter: blur(60px); opacity:.45; animation: float 14s ease-in-out infinite}
+    .orb-1{left:-20vmax; top:-15vmax; background: radial-gradient(circle at 30% 30%, #8a2be2, transparent 55%)}
+    .orb-2{right:-25vmax; top:10vmax; background: radial-gradient(circle at 30% 30%, #00d4ff, transparent 55%); animation-duration: 18s}
+    .orb-3{left:10vmax; bottom:-30vmax; background: radial-gradient(circle at 30% 30%, #00ff9d, transparent 55%); animation-duration: 22s}
+    .grain{
+      position:absolute; inset:-50%;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+      opacity:.08; transform: rotate(6deg);
+      z-index:-1;
+    }
+    @keyframes float{
+      0%,100%{transform: translate3d(0,0,0)}
+      50%{transform: translate3d(0,-22px,0)}
+    }
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(7,10,18,.78), rgba(7,10,18,.38));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .navwrap{display:flex; align-items:center; justify-content:space-between; padding:16px 0; gap:18px}
+    .brand{display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.2px}
+    .dot{width:10px; height:10px; border-radius:50%; background: linear-gradient(90deg,#8a2be2,#00d4ff,#00ff9d)}
+    .nav{display:flex; gap:22px; align-items:center; color: var(--muted)}
+    .nav a{padding:10px 10px; border-radius:12px; transition: .2s}
+    .nav a:hover{background: rgba(255,255,255,.06); color: var(--text)}
+    .nav-cta{display:flex; align-items:center; gap:10px}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 16px; border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      transition: transform .15s ease, background .2s ease, border .2s ease;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn:hover{transform: translateY(-2px)}
+    .btn-primary{
+      background: linear-gradient(90deg, rgba(138,43,226,.88), rgba(0,212,255,.88));
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 14px 40px rgba(0,212,255,.10);
+    }
+    .btn-ghost{background: rgba(255,255,255,.06)}
+
+    .burger{
+      display:none;
+      width:44px; height:44px; border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+    }
+    .burger span{display:block; height:2px; margin:7px 10px; background: rgba(255,255,255,.8); border-radius:10px}
+
+    .mobile{
+      display:none;
+      padding: 8px 0 16px;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .mobile a{
+      display:block;
+      padding:14px 4vw;
+      color: var(--muted);
+    }
+    .mobile a:hover{color:var(--text); background: rgba(255,255,255,.05)}
+    .mobile.open{display:block}
+
+    /* Hero */
+    .hero{padding: 54px 0 24px}
+    .hero-grid{display:grid; grid-template-columns: 1.1fr .9fr; gap:26px; align-items:start}
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      width:fit-content;
+    }
+    .spark{width:10px; height:10px; border-radius:50%; background: linear-gradient(90deg,#00ff9d,#00d4ff,#8a2be2)}
+    h1{
+      font-size: clamp(34px, 4.4vw, 54px);
+      line-height: 1.04;
+      margin: 16px 0 14px;
+    }
+    .grad{
+      background: linear-gradient(90deg, #8a2be2, #00d4ff, #00ff9d);
+      -webkit-background-clip:text; background-clip:text;
+      color: transparent;
+    }
+    .lead{color: var(--muted); font-size: 17px; line-height: 1.75; margin:0 0 18px}
+    .hero-actions{display:flex; gap:12px; flex-wrap:wrap}
+
+    .hero-metrics{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-top:20px}
+    .metric{
+      padding:14px 14px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+    }
+    .metric-num{font-size: 22px; font-weight: 900}
+    .metric-label{color: var(--muted); font-size: 13px; margin-top:4px}
+
+    .profile-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .profile-img{
+      height: 320px;
+      background: rgba(255,255,255,.03);
+    }
+    .profile-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center top;
+      display:block;
+    }
+
+    .profile-content{padding:18px}
+    .profile-content h3{margin:0 0 6px}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0}
+    .chip{
+      padding:8px 10px; border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:700; font-size: 12px; color: rgba(255,255,255,.82);
+    }
+    .quick{display:grid; gap:10px; margin-top:12px}
+    .quick-item{display:flex; justify-content:space-between; gap:10px; padding:10px 12px; border-radius:16px; background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.08)}
+    .q-label{color: var(--muted); font-weight:700; font-size: 12px}
+    .q-value{font-weight:800; font-size: 12px; text-align:right}
+
+    .floating{margin-top:14px}
+    .float-card{
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      padding:16px 16px;
+    }
+    .float-title{font-weight:900; margin-bottom:8px}
+    .float-list{margin:0; padding-left:18px; color: var(--muted); line-height: 1.75}
+
+    /* Sections */
+    .section{padding: 70px 0}
+    .section.last{padding-bottom: 90px}
+    .section-head{margin-bottom: 18px}
+    .section-head h2{margin:0 0 6px; font-size: 30px}
+    .section-head p{margin:0}
+
+    .about-grid{display:grid; grid-template-columns: .9fr 1.1fr; gap:18px; align-items:stretch}
+    .about-media{
+      position:relative;
+      border-radius: var(--radius2);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+    }
+    .about-media img{width:100%; height:100%; object-fit:cover; min-height: 420px}
+    .about-overlay{
+      position:absolute; left:14px; right:14px; bottom:14px;
+      display:grid; gap:10px;
+    }
+    .mini{
+      padding:12px 12px;
+      border-radius:18px;
+      background: rgba(7,10,18,.55);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+    }
+    .mini-title{font-weight:900}
+    .mini-text{color: var(--muted); margin-top:4px; font-size: 13px; line-height:1.5}
+
+    .cards{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+    .card{
+      padding:18px 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,.28);
+    }
+    .card h3{margin:0 0 6px}
+    .card p{margin:0; color: var(--muted); line-height: 1.7}
+
+    .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+    .tags span{
+      font-size: 12px; font-weight:800;
+      padding:8px 10px; border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.82);
+    }
+
+    .timeline{display:grid; gap:12px}
+    .role{
+      padding:18px 18px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .role-head{display:flex; justify-content:space-between; gap:12px; align-items:flex-start}
+    .role h3{margin:0 0 4px}
+    .role-sub{color: var(--muted); font-weight:800; font-size: 13px}
+    .pill{
+      padding:8px 10px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(0,212,255,.18), rgba(138,43,226,.18));
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:900; font-size: 12px;
+      white-space:nowrap;
+    }
+    .pill.ghost{background: rgba(255,255,255,.06)}
+    .role p{color: var(--muted); line-height: 1.75; margin:10px 0 8px}
+    .bullets{margin:0; padding-left:18px; color: var(--muted); line-height: 1.7}
+    .bullets li{margin:6px 0}
+
+    .grid{display:grid; grid-template-columns: repeat(2, 1fr); gap:12px}
+    .project{
+      padding:18px 18px;
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,.24);
+    }
+    .project-top{display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+    .project-title{font-weight:900; font-size: 16px}
+    .project-pill{
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:900; font-size: 12px; color: rgba(255,255,255,.82);
+      white-space:nowrap;
+    }
+    .project p{color: var(--muted); line-height: 1.75; margin:10px 0 0}
+
+    .skills-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    .skill-card{
+      padding:18px 18px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .skill-card h3{margin:0 0 6px}
+    .skill-card p{margin:0; line-height:1.7}
+
+    .resume-card{
+      display:flex; justify-content:space-between; gap:14px; align-items:center;
+      padding:20px 20px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .resume-title{font-weight:900; font-size: 18px}
+    .resume-sub{margin-top:6px}
+    .resume-right{display:flex; gap:10px; flex-wrap:wrap}
+
+    .contact-card{
+      display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;
+      padding:18px 18px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .contact-label{color: var(--muted); font-weight:900; font-size: 12px}
+    .contact-value{font-weight:900; margin-top:6px; display:inline-block; word-break:break-word}
+    .footer{margin-top:18px; color: var(--muted); font-weight:800; font-size: 13px}
+
+    .reveal{opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease}
+    .reveal.in{opacity:1; transform: translateY(0)}
+
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns: 1fr; }
+      .about-grid{grid-template-columns: 1fr; }
+      .cards{grid-template-columns: 1fr; }
+      .grid{grid-template-columns: 1fr; }
+      .contact-card{grid-template-columns: 1fr; }
+      .skills-grid{grid-template-columns: 1fr; }
+      .nav{display:none}
+      .burger{display:inline-block}
+      .hero-metrics{grid-template-columns: repeat(2, 1fr);}
+      .resume-card{align-items:flex-start; flex-direction:column;}
+    }
+
+    @media (max-width: 560px){
+      .hero-metrics{grid-template-columns: 1fr;}
+      .role-head,.project-top{flex-direction:column;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grain"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="container navwrap">
+      <a class="brand" href="#home">
+        <span class="dot"></span>
+        <span>Hemanth Raj Pulusu</span>
+      </a>
+
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="#projects">View Work</a>
+        <a class="btn btn-primary" href="#contact">Contact</a>
+        <button class="burger" aria-label="Open menu" id="burger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile" id="mobileMenu" aria-hidden="true">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#resume">Resume</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main id="home" class="hero">
+    <div class="container hero-grid">
+      <section class="hero-left reveal">
+        <p class="badge">
+          <span class="spark"></span>
+          Data Scientist • Product Analytics • Machine Learning • GenAI/RAG • Data Engineering
+        </p>
+
+        <h1>
+          Turning <span class="grad">complex data</span> into
+          <span class="grad">models, metrics, and product decisions</span>.
+        </h1>
+
+        <p class="lead">
+          I’m <strong>Hemanth Raj Pulusu</strong>, a Data Scientist with <strong>4+ years</strong> of experience in
+          product analytics, machine learning, experimentation, data engineering, and GenAI/RAG evaluation.
+          I build reliable pipelines, model-ready features, dashboards, A/B test plans, and stakeholder-ready
+          recommendations using <strong>Python, SQL, Spark/PySpark, Scikit-learn, XGBoost, PyTorch, LangChain, AWS, GCP, Docker, MLflow</strong>, and BI tools.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">Explore Projects</a>
+          <a class="btn btn-ghost" href="resume.pdf" download>Download Resume</a>
+          <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">View Resume</a>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-num" data-count="4" data-suffix="+">0</div>
+            <div class="metric-label">Years Experience</div>
+          </div>
+          <div class="metric">
+            <div class="metric-num" data-count="3" data-suffix="M+">0</div>
+            <div class="metric-label">Daily Events</div>
+          </div>
+          <div class="metric">
+            <div class="metric-num" data-count="9" data-suffix="%">0</div>
+            <div class="metric-label">F1 Improvement</div>
+          </div>
+          <div class="metric">
+            <div class="metric-num" data-count="200" data-suffix="K+">0</div>
+            <div class="metric-label">RAG Documents</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hero-right reveal">
+        <div class="profile-card">
+          <div class="profile-img">
+            <!-- Make sure file name is EXACT: assets/profile.jpg -->
+            <img src="assets/profile.jpg" alt="Hemanth Raj Pulusu profile" />
+          </div>
+
+          <div class="profile-content">
+            <h3>Hemanth Raj Pulusu</h3>
+            <p class="muted">
+              Data Science • ML Modeling • Product Analytics • GenAI/RAG • Data Engineering • MLOps
+            </p>
+
+            <div class="chips">
+              <span class="chip">Apple Inc</span>
+              <span class="chip">FAU</span>
+              <span class="chip">DXC Technology</span>
+              <span class="chip">AWS CLF-C02</span>
+            </div>
+
+            <div class="quick">
+              <div class="quick-item">
+                <span class="q-label">Email</span>
+                <span class="q-value">pulusuhemanthraj98@gmail.com</span>
+              </div>
+              <div class="quick-item">
+                <span class="q-label">Location</span>
+                <span class="q-value">United States</span>
+              </div>
+              <div class="quick-item">
+                <span class="q-label">Focus</span>
+                <span class="q-value">Analytics + ML + GenAI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="floating reveal">
+          <div class="float-card">
+            <div class="float-title">Strengths</div>
+            <ul class="float-list">
+              <li>Product telemetry, KPI tables, and stakeholder dashboards</li>
+              <li>Classification, ranking, error analysis, and threshold tuning</li>
+              <li>RAG evaluation, LLM workflows, human feedback, and MLflow tracking</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>About</h2>
+        <p class="muted">Data scientist focused on trustworthy analytics, model-ready data, practical ML, and production-aware GenAI systems.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-media reveal">
+          <!-- Make sure file name is EXACT: assets/about.jpg -->
+          <img src="assets/about.jpg" alt="Data science workspace" />
+          <div class="about-overlay">
+            <div class="mini">
+              <div class="mini-title">What I build</div>
+              <div class="mini-text">Pipelines • ML models • A/B tests • Dashboards • RAG evaluation systems</div>
+            </div>
+            <div class="mini">
+              <div class="mini-title">How I work</div>
+              <div class="mini-text">Data quality • Experiment design • Monitoring • Stakeholder-ready insights</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal">
+            <h3>Product Analytics</h3>
+            <p>Translate ambiguous product questions into reliable metrics, cohort/funnel analysis, A/B test plans, confidence intervals, and decision-ready readouts.</p>
+            <div class="tags"><span>A/B Testing</span><span>Cohorts</span><span>Funnels</span><span>Regression</span></div>
+          </article>
+
+          <article class="card reveal">
+            <h3>Machine Learning</h3>
+            <p>Build classification and ranking models with strong feature engineering, validation, error analysis, threshold tuning, and segment-level performance checks.</p>
+            <div class="tags"><span>Scikit-learn</span><span>XGBoost</span><span>LightGBM</span><span>PyTorch</span></div>
+          </article>
+
+          <article class="card reveal">
+            <h3>GenAI + RAG Evaluation</h3>
+            <p>Design RAG assistants with retrieval, reranking, evaluation dashboards, human-feedback loops, citation generation, and hallucination reduction guardrails.</p>
+            <div class="tags"><span>LangChain</span><span>LlamaIndex</span><span>RAGAS</span><span>FAISS</span></div>
+          </article>
+
+          <article class="card reveal">
+            <h3>Data Engineering + MLOps</h3>
+            <p>Develop scalable data pipelines, quality checks, deployment workflows, and monitoring for analytics and model readiness across cloud environments.</p>
+            <div class="tags"><span>Spark</span><span>Airflow</span><span>AWS/GCP</span><span>MLflow</span></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Experience</h2>
+        <p class="muted">Experience across product telemetry, teaching, production log analytics, cloud migration, and platform reliability.</p>
+      </div>
+
+      <div class="timeline">
+        <article class="role reveal">
+          <div class="role-head">
+            <div>
+              <h3>Apple Inc</h3>
+              <div class="role-sub">Data Scientist • Austin, TX • September 2025 – Present</div>
+            </div>
+            <div class="pill">Current</div>
+          </div>
+          <p>
+            Own Python and SQL feature pipelines across 5+ product telemetry sources, processing 3M+ daily interaction events
+            into engagement KPI tables, model-ready features, and monitoring dashboards used in weekly product reviews.
+          </p>
+          <ul class="bullets">
+            <li>Built classification and ranking models with XGBoost and Scikit-learn, improving validation F1 by 9% over baseline models.</li>
+            <li>Designed analysis plans for A/B experiments with primary metrics, guardrails, sample-size assumptions, and 95% confidence intervals.</li>
+            <li>Implemented LLM classification and summarization workflows for 1,000+ weekly review items, reducing review turnaround from 2–3 days to under 8 hours.</li>
+            <li>Automated weekly KPI dashboards and data-quality checks for schema, freshness, null-rate, and outlier monitoring.</li>
+          </ul>
+        </article>
+
+        <article class="role reveal">
+          <div class="role-head">
+            <div>
+              <h3>Florida Atlantic University</h3>
+              <div class="role-sub">Graduate Teaching Assistant • Boca Raton, FL • August 2023 – May 2025</div>
+            </div>
+            <div class="pill ghost">Teaching + Mentorship</div>
+          </div>
+          <p>
+            Led lab sessions across algorithms, data structures, OOP, and programming fundamentals while improving grading workflows,
+            reproducibility, debugging quality, and student support.
+          </p>
+          <ul class="bullets">
+            <li>Led 24+ lab sessions for 60+ students while maintaining a 95% student satisfaction rating across two semesters.</li>
+            <li>Created 10+ programming assignments, rubrics, and Git-based submission workflows, reducing grading turnaround to about 48 hours.</li>
+            <li>Reviewed 350+ coding submissions and 40+ project deliverables while tracking recurring error patterns.</li>
+          </ul>
+        </article>
+
+        <article class="role reveal">
+          <div class="role-head">
+            <div>
+              <h3>DXC Technology</h3>
+              <div class="role-sub">Software Engineer - Data & Platform Engineering • Bangalore, India • June 2020 – June 2023</div>
+            </div>
+            <div class="pill ghost">Data Platform</div>
+          </div>
+          <p>
+            Built production data pipelines, log-analysis workflows, anomaly reports, and cloud migration support for enterprise applications,
+            improving incident triage and operational reliability.
+          </p>
+          <ul class="bullets">
+            <li>Built SQL and Python pipelines for 2M+ monthly production log records, reducing mean incident resolution time by 35%.</li>
+            <li>Developed anomaly detection and trend reports that reduced recurring alert noise by 18%.</li>
+            <li>Migrated data processing assets for 9 applications to AWS using S3, EC2, and IAM.</li>
+            <li>Automated deployment and validation workflows with Jenkins and Bash across 12 production releases.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Projects</h2>
+        <p class="muted">Featured work across GenAI/RAG, multi-agent systems, medical deep learning, and cloud-native AI applications.</p>
+      </div>
+
+      <div class="grid">
+        <article class="project reveal">
+          <div class="project-top">
+            <div class="project-title">Agentic RAG Knowledge Assistant - LLM Evaluation Platform</div>
+            <div class="project-pill">RAG • MLflow</div>
+          </div>
+          <p>
+            Built an agentic RAG assistant over 200K+ documents with retrieval, planning, citation generation, and human-feedback loops,
+            reducing query resolution time from 8 minutes to 45 seconds in test workflows.
+          </p>
+          <div class="tags"><span>Python</span><span>LangChain</span><span>LlamaIndex</span><span>RAGAS</span><span>FAISS</span><span>GCP Cloud Run</span></div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-top">
+            <div class="project-title">OwlTA ClassBuilder - 5-Agent Generative AI Orchestration System</div>
+            <div class="project-pill">Multi-Agent</div>
+          </div>
+          <p>
+            Built a 5-agent LLM workflow that generated lesson plans, quizzes, and class activities in under 30 seconds,
+            cutting sample content-preparation time by about 70% with a teacher-controlled review loop.
+          </p>
+          <div class="tags"><span>OpenAI API</span><span>LangChain</span><span>Flask REST API</span><span>Discord.py</span><span>Python</span></div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-top">
+            <div class="project-title">3D Brain Tumor Segmentation - Custom U-Net Deep Learning Model</div>
+            <div class="project-pill">Deep Learning</div>
+          </div>
+          <p>
+            Trained a custom 3D U-Net encoder-decoder on 484 BraTS MRI scans and implemented Dice, IoU, Sensitivity,
+            and Specificity tracking to evaluate tumor sub-region segmentation quality.
+          </p>
+          <div class="tags"><span>PyTorch</span><span>MONAI</span><span>NIfTI</span><span>CUDA</span><span>Dice Score</span></div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-top">
+            <div class="project-title">Cloud-Native AI Image Management Platform</div>
+            <div class="project-pill">GCP • CI/CD</div>
+          </div>
+          <p>
+            Deployed a serverless image-intelligence app with auto-generated titles/descriptions, blue-green CI/CD,
+            GCP IAM controls, and zero-downtime rollouts across 3 production versions.
+          </p>
+          <div class="tags"><span>Gemini Vision API</span><span>Cloud Run</span><span>Cloud Storage</span><span>Docker</span><span>GitHub Actions</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Skills</h2>
+        <p class="muted">A clean premium skills layout for recruiters, hiring managers, and portfolio viewers.</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card reveal"><h3>Programming & Analytics</h3><p class="muted">Python, SQL, R, Pandas, NumPy, SciPy, Java, Bash</p></div>
+        <div class="skill-card reveal"><h3>Statistics & Product Analytics</h3><p class="muted">A/B Testing, Hypothesis Testing, Confidence Intervals, Regression, Cohort Analysis, Funnel Analysis, Causal Inference, Time Series</p></div>
+        <div class="skill-card reveal"><h3>Machine Learning</h3><p class="muted">Scikit-learn, XGBoost, LightGBM, Random Forest, Logistic Regression, Ranking Models, Feature Engineering, Model Evaluation</p></div>
+        <div class="skill-card reveal"><h3>GenAI, NLP & LLM Evaluation</h3><p class="muted">LangChain, LlamaIndex, RAG, Agentic Workflows, OpenAI/Gemini APIs, ChromaDB, FAISS, RAGAS, Prompt Evaluation</p></div>
+        <div class="skill-card reveal"><h3>Deep Learning</h3><p class="muted">PyTorch, TensorFlow, MONAI, 3D U-Net, CNN, LSTM, Hugging Face Transformers, CUDA</p></div>
+        <div class="skill-card reveal"><h3>Data Engineering</h3><p class="muted">Spark, PySpark, Kafka, Hadoop, Hive, Airflow, ETL Pipelines, Data Quality, Data Modeling</p></div>
+        <div class="skill-card reveal"><h3>Cloud & MLOps</h3><p class="muted">AWS, GCP, Docker, Kubernetes, GitHub Actions, Jenkins, MLflow, SageMaker, Vertex AI, BigQuery</p></div>
+        <div class="skill-card reveal"><h3>Visualization & BI</h3><p class="muted">Tableau, Power BI, Streamlit, Plotly/Dash, Matplotlib, Seaborn, Grafana</p></div>
+        <div class="skill-card reveal"><h3>Certifications</h3><p class="muted">AWS Certified Cloud Practitioner, Big Data Analytics Certification, Google Professional Machine Learning Engineer (2026)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resume" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Resume</h2>
+        <p class="muted">Put the resume PDF in the root folder as <strong>resume.pdf</strong> in the same folder as <strong>index.html</strong>.</p>
+      </div>
+
+      <div class="resume-card reveal">
+        <div class="resume-left">
+          <div class="resume-title">Hemanth Raj Pulusu — Data Scientist</div>
+          <div class="resume-sub muted">Python • SQL • ML • Product Analytics • GenAI/RAG • Spark/PySpark • AWS/GCP • MLflow</div>
+          <div class="resume-sub muted">M.S. Data Science and Analytics, Florida Atlantic University • May 2025</div>
+        </div>
+        <div class="resume-right">
+          <a class="btn btn-primary" href="resume.pdf" download>Download PDF</a>
+          <a class="btn btn-ghost" href="resume.pdf" target="_blank" rel="noopener">View</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section last">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Contact</h2>
+        <p class="muted">Feel free to reach out — I’m open to Data Scientist, Machine Learning, Product Analytics, GenAI, and Data Engineering roles.</p>
+      </div>
+
+      <div class="contact-card reveal">
+        <div class="contact-item">
+          <div class="contact-label">Phone</div>
+          <a class="contact-value" href="tel:+15615425348">+1 (561) 542-5348</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">Email</div>
+          <a class="contact-value" href="mailto:pulusuhemanthraj98@gmail.com">pulusuhemanthraj98@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">LinkedIn</div>
+          <a class="contact-value" href="https://www.linkedin.com/in/p-hemanth-raj-b785ba413" target="_blank" rel="noopener">linkedin.com/in/p-hemanth-raj-b785ba413</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">GitHub</div>
+          <a class="contact-value" href="https://github.com/pulusuhemanthraj" target="_blank" rel="noopener">github.com/pulusuhemanthraj</a>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div>© <span id="year"></span> Hemanth Raj Pulusu — Built for data-driven product impact.</div>
+      </footer>
+    </div>
+  </section>
+
+  <script>
+    // Mobile menu
+    const burger = document.getElementById("burger");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (burger && mobileMenu) {
+      burger.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+        const isOpen = mobileMenu.classList.contains("open");
+        mobileMenu.setAttribute("aria-hidden", String(!isOpen));
+      });
+
+      mobileMenu.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+          mobileMenu.classList.remove("open");
+          mobileMenu.setAttribute("aria-hidden", "true");
+        });
+      });
+    }
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) e.target.classList.add("in");
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+
+    // Animated counters with suffix support
+    function animateCount(el, end) {
+      const duration = 950;
+      const suffix = el.dataset.suffix || "";
+      const t0 = performance.now();
+      function tick(t) {
+        const p = Math.min((t - t0) / duration, 1);
+        const val = Math.floor(end * (1 - Math.pow(1 - p, 3)));
+        el.textContent = val + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const metricNums = document.querySelectorAll(".metric-num[data-count]");
+    let counted = false;
+
+    const metricIO = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!counted && e.isIntersecting) {
+          counted = true;
+          metricNums.forEach(n => animateCount(n, Number(n.dataset.count || "0")));
+        }
+      });
+    }, { threshold: 0.25 });
+
+    metricNums.forEach(n => metricIO.observe(n));
+
+    // Footer year
+    const year = document.getElementById("year");
+    if (year) year.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
